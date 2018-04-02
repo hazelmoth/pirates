@@ -27,6 +27,8 @@ public class Player : NetworkBehaviour {
 	public bool IsItemEquipped {get{return isItemEquipped;}}
 	[SyncVar] public string playerID; // Super early placeholder stuff. In the future we might store the CSteamID variable instead, or something else.
 
+	public bool activateDeath; // For testing purposes only; allows activating death from inspector
+
 	public override void OnStartClient()
 	{
 		CheckIfDead (isDead); // Make sure players that are already dead are displayed as such when a client joins
@@ -96,6 +98,13 @@ public class Player : NetworkBehaviour {
 	{
 		if (!isLocalPlayer)
 			return;
+
+		// For testing purposes only; allows activating death from inspector
+		if (activateDeath) {
+			Die ();
+			activateDeath = false;
+		}
+
 
 		if (Input.GetKeyDown (KeyCode.F)) 
 		{
@@ -202,8 +211,10 @@ public class Player : NetworkBehaviour {
 		
 	void CheckIfDead (bool isDead) // Called locally from each gameobject after isDead for any object has been updated
 	{
+		Debug.Log ("isDead has been changed");
 		if (isDead)
 		{
+			Debug.Log ("A player is dead.");
 			GetComponent<Animator>().enabled = false;
 			GetComponent<CustomFirstPersonController>().enabled = false;
 			GetComponent<NetworkTransform> ().enabled = false;
@@ -224,7 +235,7 @@ public class Player : NetworkBehaviour {
 	}
 		
 
-	public void Die() // Public wrapper for command; currently not really necessary, but we might need it
+	public void Die() // Public wrapper for command
 	{
 		Debug.Log ("Die() called on " + name);
 

@@ -2292,6 +2292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 
+  activateDeath: 0
 --- !u!114 &114298106196871600
 MonoBehaviour:
   m_ObjectHideFlags: 1

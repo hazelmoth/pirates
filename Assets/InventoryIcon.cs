@@ -94,6 +94,7 @@ public class InventoryIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		{
 			if (dragDestination == inventoryPanel) {
 				Debug.Log ("Icon dragged outside of inventory area");
+				uiManager.ManageItemDrop (originalParent);
 			}
 			ResetIconPosition ();
 		}

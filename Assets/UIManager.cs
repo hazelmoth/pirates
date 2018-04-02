@@ -125,7 +125,7 @@ public class UIManager : MonoBehaviour {
 		inventoryItemImage.sprite = item.Icon;
 	}
 
-
+	// Waits for an inventory sync and then calls UpdateInventoryPanels
 	IEnumerator UpdateInventoryPanelsCoroutine ()
 	{
 		PlayerInventory inv = Player.localPlayer.GetComponent<PlayerInventory> ();
@@ -223,6 +223,12 @@ public class UIManager : MonoBehaviour {
 		playerInventory.MoveInventoryItem((int)start.x, (int)start.y, (int)end.x, (int)end.y);
 		UpdateInventoryPanelsAfterSync ();
 		Player.localPlayer.UpdateItemInCurrentHotbarSlot (); // Make sure the animations follow properly if we move the item in the current hotbar slot
+	}
+
+	public void ManageItemDrop (GameObject draggedSlot)
+	{
+		Vector2 slotCoords = FindIndexOfInventorySlot (draggedSlot);
+		Player.localPlayer.DropItem ((int)slotCoords.x, (int)slotCoords.y);
 	}
 		
 	public void EmptyInventoryDescription ()

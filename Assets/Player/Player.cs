@@ -256,6 +256,14 @@ public class Player : NetworkBehaviour {
 		animationController.DeactivateHands();
 	}
 
+	public void DropItem (int slotX, int slotY) {
+		int id = inventory.GetInventoryArray ()[slotX, slotY];
+		inventory.RemoveItemFromInventory (slotX, slotY);
+		UpdateItemInCurrentHotbarSlot ();
+		uiManager.UpdateInventoryPanelsAfterSync ();
+		CmdDropItem (id);
+	}
+
 	public void UpdateItemInCurrentHotbarSlot ()
 	{
 		if (activeHotbarSlot != null)
@@ -288,5 +296,13 @@ public class Player : NetworkBehaviour {
 	{
 		Debug.Log ("[SERVER] CmdDie called");
 		isDead = true;
+	}
+
+	[Command]
+	void CmdDropItem (int itemID) {
+		GameObject cameraToAlignWith = this.GetCamera().gameObject;
+		GameObject itemToDrop = Instantiate (ItemManager.Dictionary.GetItemObject (itemID), cameraToAlignWith.transform.position + (cameraToAlignWith.transform.forward * 0.2f), cameraToAlignWith.transform.rotation);
+		itemToDrop.GetComponent<Rigidbody> ().velocity = cameraToAlignWith.transform.forward * 2f;
+		NetworkServer.Spawn (itemToDrop);
 	}
 }

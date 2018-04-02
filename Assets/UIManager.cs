@@ -293,6 +293,10 @@ public class UIManager : MonoBehaviour {
 		currentCursorLockMode = CursorLockMode.None;
 	}
 
+	public GameObject InventoryPanel () {
+		return inventoryPanel;
+	}
+
 	public void DebugUI()
 	{
 		Debug.Log ("Cursor lock state: " + Cursor.lockState);

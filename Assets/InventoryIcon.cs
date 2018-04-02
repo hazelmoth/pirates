@@ -13,12 +13,14 @@ public class InventoryIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	private GameObject originalParent;
 	private GameObject draggingParent; // Parent object to child icons to as they are being dragged
 	private UIManager uiManager;
+	private GameObject inventoryPanel;
 
 	void Start () {
 		rectTransform = GetComponent<RectTransform> ();
 		originalParent = gameObject.transform.parent.gameObject;
 		draggingParent = GameObject.Find ("Drag Parent Object");
 		uiManager = GameObject.FindObjectOfType<UIManager> ();
+		inventoryPanel = uiManager.InventoryPanel ();
 	}
 
 	public void OnPointerDown (PointerEventData eventData)
@@ -73,6 +75,11 @@ public class InventoryIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	void ManageDrag (GameObject dragDestination)
 	{
+		if (dragDestination == null) {
+			ResetIconPosition ();
+			return;
+		}
+
 		if (dragDestination.GetComponent<InventoryIcon>())
 		{
 			dragDestination = dragDestination.transform.parent.gameObject;
@@ -85,6 +92,9 @@ public class InventoryIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		}
 		else 
 		{
+			if (dragDestination == inventoryPanel) {
+				Debug.Log ("Icon dragged outside of inventory area");
+			}
 			ResetIconPosition ();
 		}
 	}

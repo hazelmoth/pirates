@@ -4,22 +4,10 @@ using UnityEngine;
 
 public class Gun : Item {
 
-	[SerializeField] private int damageToHead = 100;
-	[SerializeField] private int damageToTorso = 50;
-	[SerializeField] private int damageToLimbs = 25;
+	[SerializeField] private int baseDamage = 50;
 
-	public int DamageToHead ()
+	public int BaseDamage ()
 	{
-		return damageToHead;
-	}
-
-	public int DamageToTorso ()
-	{
-		return damageToTorso;
-	}
-
-	public int DamageToLimbs ()
-	{
-		return damageToLimbs;
+		return baseDamage;
 	}
 }

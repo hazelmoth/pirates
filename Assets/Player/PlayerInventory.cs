@@ -10,8 +10,8 @@ public class PlayerInventory : NetworkBehaviour {
 	public bool isAwaitingInventorySync;
 
 	// An array of ints to hold item IDs. I guess we're using '0' for empty.
-	// Some of these slots will only be accessible when a backpack is equipped. In theory. That's the plan.
 	// Ideally this should only be managed on the server. Currently the array is retrieved from the server and passed around locally.
+	// TODO: resize this (smaller) so it's more appropriate for the pirate game (which likely won't have backpacks)
 	[SerializeField] private int[,] inventory = new int[6,9]; 
 
 	public override void OnStartLocalPlayer ()
@@ -68,8 +68,10 @@ public class PlayerInventory : NetworkBehaviour {
 	}
 
 
-		
-	public bool AddItemToInventory (int itemID, out int slotX, out int slotY) // Check if there's space for an item, and if so call command to add the item and return true.
+	// Check if there's space for an item, and if so call command to add the item and return true.
+	// This can be called from anywhere to add an item to the inventory, in theory. 
+	// Should probably be followed by UIManager.UpdateInventoryPanelsAfterSync().
+	public bool AddItemToInventory (int itemID, out int slotX, out int slotY) 
 	{          
 		Debug.Log ("AddItemToInventory called.");
 		Debug.Log ("Current inventory x length: " + inventory.GetLength (0));
@@ -129,7 +131,7 @@ public class PlayerInventory : NetworkBehaviour {
 	[Command]
 	void CmdMoveInventoryItem (int oldX, int oldY, int newX, int newY)
 	{
-		Debug.Log (inventory[0,0] + ", " + inventory[0,0]);
+		Debug.Log (inventory [oldX, oldY] + ", " + inventory[newX, newY]);
 
 		int startItemID = inventory [oldX, oldY];
 		int endItemID = inventory [newX, newY];
@@ -138,7 +140,7 @@ public class PlayerInventory : NetworkBehaviour {
 		inventory [oldX, oldY] = endItemID;
 
 		Debug.Log ("[SERVER] Moved inventory item from " + oldX + ", " + oldY + " to " + newX + ", " + newY);
-		Debug.Log (inventory[0,0] + ", " + inventory[0,0]);
+		Debug.Log (inventory [oldX, oldY] + ", " + inventory[newX, newY]);
 	}
 
 

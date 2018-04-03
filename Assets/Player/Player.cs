@@ -261,7 +261,7 @@ public class Player : NetworkBehaviour {
 		inventory.RemoveItemFromInventory (slotX, slotY);
 		UpdateItemInCurrentHotbarSlot ();
 		uiManager.UpdateInventoryPanelsAfterSync ();
-		CmdDropItem (id);
+		CmdDropItem (id, gameObject.GetComponent<NetworkIdentity>().netId);
 	}
 
 	public void UpdateItemInCurrentHotbarSlot ()
@@ -299,8 +299,8 @@ public class Player : NetworkBehaviour {
 	}
 
 	[Command]
-	void CmdDropItem (int itemID) {
-		GameObject cameraToAlignWith = this.GetCamera().gameObject;
+	void CmdDropItem (int itemID, NetworkInstanceId playerID) {
+		GameObject cameraToAlignWith = NetworkServer.FindLocalObject(playerID).GetComponent<Player>().GetComponentInChildren<Camera>().gameObject;
 		GameObject itemToDrop = Instantiate (ItemManager.Dictionary.GetItemObject (itemID), cameraToAlignWith.transform.position + (cameraToAlignWith.transform.forward * 0.2f), cameraToAlignWith.transform.rotation);
 		itemToDrop.GetComponent<Rigidbody> ().velocity = cameraToAlignWith.transform.forward * 2f;
 		NetworkServer.Spawn (itemToDrop);

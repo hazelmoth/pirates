@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour {
 
 	[SerializeField] private ItemDictionary itemDictionary = null;
-	public static ItemDictionary Dictionary;
+	public static ItemDictionary Dictionary; // Assigned in the inspector
 
 	// Use this for initialization
 	void Start () {

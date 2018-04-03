@@ -434,7 +434,7 @@ MonoBehaviour:
   itemModel: {fileID: 1747229967690560, guid: 50be4e9618cfd3349af6aaa8ebd90765, type: 2}
   equippedRotation: {x: 0, y: 84, z: 0}
   aimFOVMultiplier: 1
-  Icon: {fileID: 21300000, guid: efa54cb4c358e8f4db679c725285c21d, type: 3}
+  Icon: {fileID: 21300000, guid: dca4d0ab1b52809408b6c309364e3ad3, type: 3}
   baseDamage: 30
 --- !u!114 &114738948828440132
 MonoBehaviour:

@@ -9,7 +9,9 @@ public class Item : MonoBehaviour {
 	[SerializeField] private string itemName = null;
 	[SerializeField] private string description = null;
 	[SerializeField] private GameObject itemModel = null;
+	[SerializeField] private Vector3 equippedRotation = new Vector3 (0, 0, 0);
 	[SerializeField] private float aimFOVMultiplier = 1.0f;
+
 
 	public int ItemID              { get { return itemID; }}
 	public int AnimationID         { get { return animationID; }}
@@ -17,6 +19,7 @@ public class Item : MonoBehaviour {
 	public string  Description     { get { return description; }}
 	public float AimFovMultiplier  { get { return aimFOVMultiplier; }}
 	public GameObject ItemModel    { get { return itemModel; }}
+	public Vector3 EquippedRotation{ get { return equippedRotation; }}
 	public Sprite Icon;
 
 	void Start()
@@ -26,6 +29,8 @@ public class Item : MonoBehaviour {
 			Debug.LogError("Item \"" + itemName + "\" has an ID of zero. Which shouldn't happen. It makes no sense. Fix it.");
 		}
 	}
+
+
 
 
 }

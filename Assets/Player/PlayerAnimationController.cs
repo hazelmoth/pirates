@@ -186,9 +186,19 @@ public class PlayerAnimationController : NetworkBehaviour {
 	{
 		GameObject player = NetworkServer.FindLocalObject (playerID);
 		PlayerAnimationController animController = player.GetComponent<PlayerAnimationController> ();
+		Item item = ItemManager.Dictionary.GetItem (itemID);
 
-		animController.currentItemThirdPerson = GameObject.Instantiate (ItemManager.Dictionary.GetItem (itemID).ItemModel, thirdPersonRightHand.transform.position, thirdPersonRightHand.transform.rotation, thirdPersonRightHand.transform);
-		animController.currentItemThirdPersonShadows = GameObject.Instantiate (ItemManager.Dictionary.GetItem (itemID).ItemModel, thirdPersonRightHand.transform.position, thirdPersonRightHand.transform.rotation, thirdPersonRightHand.transform);
+		animController.currentItemThirdPerson = GameObject.Instantiate (
+			item.ItemModel, 
+			thirdPersonRightHand.transform.position, 
+			thirdPersonRightHand.transform.rotation * Quaternion.Euler(item.EquippedRotation), 
+			thirdPersonRightHand.transform);
+		
+		animController.currentItemThirdPersonShadows = GameObject.Instantiate (
+			item.ItemModel, 
+			thirdPersonRightHand.transform.position, 
+			thirdPersonRightHand.transform.rotation * Quaternion.Euler(item.EquippedRotation),
+			thirdPersonRightHand.transform);
 
 		NetworkServer.Spawn (animController.currentItemThirdPerson);
 		NetworkServer.Spawn (animController.currentItemThirdPersonShadows);

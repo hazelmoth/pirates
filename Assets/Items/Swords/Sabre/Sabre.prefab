@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 3
-  animationID: 1
+  animationID: 2
   itemName: Sabre
   description: A quick, elegant sword for the more cultured fighters among us.
   itemModel: {fileID: 1747229967690560, guid: 50be4e9618cfd3349af6aaa8ebd90765, type: 2}

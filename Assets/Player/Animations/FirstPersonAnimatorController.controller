@@ -1347,7 +1347,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 132abf6ee9764ae45b82f1d4a96e7fab, type: 2}
+  m_Motion: {fileID: 7400000, guid: bb9fc79c66e76084a9a967802e424b2d, type: 2}
   m_Tag: 
   m_SpeedParameter: Walking
   m_MirrorParameter: Using Hands
@@ -1374,7 +1374,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 80fd39bd0974a1e41915a0781ed00a64, type: 2}
+  m_Motion: {fileID: 7400000, guid: 41f79507f747c5f4fa27a875a765b69f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

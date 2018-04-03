@@ -158,7 +158,11 @@ public class PlayerAnimationController : NetworkBehaviour {
 	{
 		if (currentEquippedItemID != 0 && currentItemFirstPerson == null)
 		{
-			currentItemFirstPerson = GameObject.Instantiate (ItemManager.Dictionary.GetItem (currentEquippedItemID).ItemModel, firstPersonRightHand.transform.position, firstPersonRightHand.transform.rotation, firstPersonRightHand.transform);
+			currentItemFirstPerson = GameObject.Instantiate (
+				ItemManager.Dictionary.GetItem (currentEquippedItemID).ItemModel, 
+				firstPersonRightHand.transform.position, 
+				firstPersonRightHand.transform.rotation * Quaternion.Euler(ItemManager.Dictionary.GetItem (currentEquippedItemID).EquippedRotation), 
+				firstPersonRightHand.transform);
 			foreach(Renderer renderer in currentItemFirstPerson.GetComponentsInChildren<Renderer>())
 			{
 				renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; // Don't cast shadows for first person items

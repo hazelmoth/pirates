@@ -281,11 +281,10 @@ MonoBehaviour:
   itemName: Beretta
   description: A super nifty, super reliable handgun. It's really pretty nifty.
   itemModel: {fileID: 1530752539527168, guid: b25db66890ef43d49a394a2116d9c0ea, type: 2}
+  equippedRotation: {x: 0, y: 0, z: 0}
   aimFOVMultiplier: 0.9
   Icon: {fileID: 21300000, guid: 793bbd48319eb0243bf8691facdb7e36, type: 3}
-  damageToHead: 100
-  damageToTorso: 50
-  damageToLimbs: 25
+  baseDamage: 50
 --- !u!136 &136491517938496540
 CapsuleCollider:
   m_ObjectHideFlags: 1

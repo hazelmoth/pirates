@@ -9,11 +9,13 @@ public class PlayerAnimationController : NetworkBehaviour {
 	private const string HandAnimatorBoolAiming = "Aiming";
 	private const string HandAnimatorIntAnimationID = "Animation ID";
 	private const string HandAnimatorTriggerForceHolster = "Force Holster";
+	private const string HandAnimatorTriggerAttack = "Attack";
 	private const string PlayerAnimatorFloatWalking = "Walking";
 	private const string PlayerAnimatorBoolUsingHands = "Using Hands";
 	private const string PlayerAnimatorBoolAiming = "Aiming";
 	private const string PlayerAnimatorIntAnimationID = "Animation ID";
 	public const string PlayerAnimatorTriggerForceHolster = "Force Holster";
+	private const string PlayerAnimatorTriggerAttack = "Attack";
 
 	private GameObject firstPersonRightHand;
 	private GameObject thirdPersonRightHand;
@@ -102,6 +104,17 @@ public class PlayerAnimationController : NetworkBehaviour {
 			StartCoroutine (ResetFov (0.25f));
 		}
 	}
+
+	public void ActivateAttack() 
+	{
+		if (playerAnimator.GetCurrentAnimatorStateInfo(1).IsName("Sword") && handAnimator.GetCurrentAnimatorStateInfo(0).IsName("Sword")) { // TODO: Update this when we have other weapons that can attack
+			Debug.Log(playerAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
+			handAnimator.SetTrigger (HandAnimatorTriggerAttack);
+			networkAnimator.SetTrigger (PlayerAnimatorTriggerAttack);
+			ResetThirdPersonAttackTrigger ();
+		}
+
+	}
 			
 	public void SetEquippedItem (int itemID)
 	{
@@ -183,6 +196,16 @@ public class PlayerAnimationController : NetworkBehaviour {
 	public void ResetThirdPersonForceHolsterTrigger ()
 	{
 		playerAnimator.ResetTrigger (PlayerAnimatorTriggerForceHolster);
+	}
+
+	public void ResetFirstPersonAttackTrigger ()
+	{
+		handAnimator.ResetTrigger (HandAnimatorTriggerAttack);
+	}
+
+	public void ResetThirdPersonAttackTrigger ()
+	{
+		playerAnimator.ResetTrigger (PlayerAnimatorTriggerAttack);
 	}
 
 	[Command]

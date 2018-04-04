@@ -147,6 +147,14 @@ public class Player : NetworkBehaviour {
 		{
 			animationController.SetAiming (false);
 		}
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			if (IsItemEquipped && animationController.CurrentEquippedItemID != 0) 
+			{
+				animationController.ActivateAttack();
+			}
+		}
 	}
 
 	void FixedUpdate()

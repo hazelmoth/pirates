@@ -29,7 +29,9 @@ public class PlayerShipManager : NetworkBehaviour {
 	void RpcParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
 		GameObject player = ClientScene.FindLocalObject (playerNetId);
 		GameObject ship = ClientScene.FindLocalObject (shipId);
-		player.transform.SetParent (ship.transform);
+		if (player == Player.localPlayer.gameObject) { 						// Only set the parent if you are the player being parented, so the other clients follow the movement of the player and ship seperately to keep it smooth.
+			player.transform.SetParent (ship.transform);            // (This sort of defeats the purpose of doing a command and ClientRpc. Oh well.)
+		}
 	}
 
 	public void UnarentPlayer (GameObject player) {
@@ -44,6 +46,8 @@ public class PlayerShipManager : NetworkBehaviour {
 	[ClientRpc]
 	void RpcUnparentPlayer (NetworkInstanceId playerNetId) {
 		GameObject player = ClientScene.FindLocalObject (playerNetId);
-		player.transform.parent = null;
+		if (player == Player.localPlayer.gameObject) {
+			player.transform.parent = null;
+		}
 	}
 }

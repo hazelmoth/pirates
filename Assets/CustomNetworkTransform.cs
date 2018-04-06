@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
+[NetworkSettings(sendInterval = 0.05f)]
 public class CustomNetworkTransform : NetworkBehaviour
 {
 

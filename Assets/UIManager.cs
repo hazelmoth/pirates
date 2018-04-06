@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour {
 	[SerializeField] private Text inventoryItemTitle = null;
 	[SerializeField] private Text inventoryItemDescription = null;
 	[SerializeField] private Image inventoryItemImage = null;
+	[SerializeField] private Slider healthBar = null;
 	[SerializeField] private GameObject inventoryDragParent = null;
 	[SerializeField] private GameObject inventoryPanel = null;
 	[SerializeField] private GameObject[] inventoryRows = null;
@@ -273,6 +274,10 @@ public class UIManager : MonoBehaviour {
 	{
 		activeHotbarSlot = null;
 		UpdateActiveHotbarSlot ();
+	}
+
+	public void UpdateHealthBar(float value) {
+		healthBar.value = value;
 	}
 
 	public void SetInteractTextToItem (Item item)

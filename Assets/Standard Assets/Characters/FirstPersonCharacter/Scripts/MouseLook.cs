@@ -49,6 +49,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
             {
                 character.localRotation = m_CharacterTargetRot;
+				character.rotation = m_CharacterTargetRot; // I added this line to prevent the player from turning when he's parented to a ship
                 camera.localRotation = m_CameraTargetRot;
             }
 

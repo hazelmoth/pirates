@@ -4908,7 +4908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482bdfed6c402554796a00e16aec9b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpRate: 20
+  lerpRate: 10
   posThreshold: 0.1
   rotThreshold: 5
 --- !u!114 &905672279

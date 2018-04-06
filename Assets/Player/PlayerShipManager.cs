@@ -27,8 +27,8 @@ public class PlayerShipManager : NetworkBehaviour {
 
 	[ClientRpc]
 	void RpcParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
-		GameObject player = NetworkServer.FindLocalObject (playerNetId);
-		GameObject ship = NetworkServer.FindLocalObject (shipId);
+		GameObject player = ClientScene.FindLocalObject (playerNetId);
+		GameObject ship = ClientScene.FindLocalObject (shipId);
 		player.transform.SetParent (ship.transform);
 	}
 
@@ -43,7 +43,7 @@ public class PlayerShipManager : NetworkBehaviour {
 
 	[ClientRpc]
 	void RpcUnparentPlayer (NetworkInstanceId playerNetId) {
-		GameObject player = NetworkServer.FindLocalObject (playerNetId);
+		GameObject player = ClientScene.FindLocalObject (playerNetId);
 		player.transform.parent = null;
 	}
 }

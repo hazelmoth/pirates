@@ -24,10 +24,10 @@ public class Ship : NetworkBehaviour {
 	}
 
 	public void ParentPlayer (GameObject player) {
-		player.GetComponent<PlayerShipManager> ().ParentPlayer (player, this.gameObject);
+		Player.localPlayer.GetComponent<PlayerShipManager> ().ParentPlayer (player, this.gameObject);
 	}
 
 	public void UnarentPlayer (GameObject player) {
-		player.GetComponent<PlayerShipManager> ().UnarentPlayer (player);
+		Player.localPlayer.GetComponent<PlayerShipManager> ().UnarentPlayer (player);
 	}
 }

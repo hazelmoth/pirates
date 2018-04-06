@@ -9,8 +9,8 @@ public class ThirdPersonWeaponSpawnBehaviour : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
 	{
 		Debug.Log ("Weapon despawn behaviour called");
-		PlayerAnimationController playerAnimationBehaviour = animator.transform.root.GetComponent<PlayerAnimationController> ();
-		playerAnimationBehaviour.GetComponent<PlayerAnimationController> ().SpawnItemThirdPerson ();
+		PlayerAnimationController playerAnimationBehaviour = animator.transform.GetComponentInParent<PlayerAnimationController> ();  // Search in parent in case the player is a child of a boat.
+		playerAnimationBehaviour.GetComponent<PlayerAnimationController> ().SpawnItemThirdPerson ();								 // Note that GetComponentInParent starts on the current object so no worries.
 		animator.ResetTrigger (PlayerAnimationController.PlayerAnimatorTriggerForceHolster);
 	}
 

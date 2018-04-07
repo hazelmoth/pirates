@@ -6,12 +6,15 @@ using UnityEngine.Networking;
 public class Ship : NetworkBehaviour {
 
 	[SerializeField] private float speed;
+	[SerializeField] private float rotationalSpeed;
 	private Rigidbody rigidbody;
 	private GameObject parentCollider;
 	[SyncVar] private bool wheelIsOccupied = false;
 
 	public bool WheelIsOccupied {get {return wheelIsOccupied;}}
-	public bool isTraveling = false;
+	[SyncVar] public bool isTraveling = false;
+	[SyncVar] public bool isRotatingRight = false;
+	[SyncVar] public bool isRotatingLeft = false;
 
 	void Start ()
 	{
@@ -20,8 +23,14 @@ public class Ship : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isTraveling && isServer) {
-			transform.Translate (transform.forward * speed * Time.deltaTime);
+		if (isTraveling) {
+			transform.Translate (Vector3.forward * speed * Time.deltaTime, transform);
+		}
+		if (isRotatingLeft) {
+			transform.Rotate (new Vector3 (0f, -rotationalSpeed, 0f));
+		}
+		else if (isRotatingRight) {
+			transform.Rotate (new Vector3 (0f, rotationalSpeed, 0f));
 		}
 	}
 

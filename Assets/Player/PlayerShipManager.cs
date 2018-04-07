@@ -23,6 +23,33 @@ public class PlayerShipManager : NetworkBehaviour {
 		{
 			DeactivateShipWheel (currentlyControlledShip);
 		}
+		else if (Input.GetKeyDown (KeyCode.W) && currentlyControlledShip != null) 
+		{
+			CmdSetShipTravelling (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, true);
+		}
+		else if (Input.GetKeyDown (KeyCode.S) && currentlyControlledShip != null) 
+		{
+			CmdSetShipTravelling (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, false);
+		}
+
+		if (Input.GetKeyDown (KeyCode.A) && currentlyControlledShip != null) 
+		{
+			CmdSetShipRotatingLeft (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, true);
+		}
+		else if (Input.GetKeyDown (KeyCode.D) && currentlyControlledShip != null) 
+		{
+			CmdSetShipRotatingRight (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, true);
+		}
+
+		if (Input.GetKeyUp (KeyCode.A) && currentlyControlledShip != null)
+		{
+			CmdSetShipRotatingLeft (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, false);
+		}
+		if (Input.GetKeyUp (KeyCode.D) && currentlyControlledShip != null)
+		{
+			CmdSetShipRotatingRight (currentlyControlledShip.GetComponent<NetworkIdentity> ().netId, false);
+		}
+
 		if (justActivatedWheel)
 		{
 			justActivatedWheel = false;
@@ -55,7 +82,7 @@ public class PlayerShipManager : NetworkBehaviour {
 			return;
 		}
 		if (!ship.WheelIsOccupied) {
-			Debug.LogWarning ("Player tried deactivate a wheel that isn't occupied?");
+			Debug.LogWarning ("Player tried to deactivate a wheel that isn't occupied?");
 			return;
 		}
 		if (!originalParent) {
@@ -63,8 +90,11 @@ public class PlayerShipManager : NetworkBehaviour {
 		} else {
 			transform.SetParent (originalParent);
 		}
+		NetworkInstanceId shipNetId = ship.GetComponent<NetworkIdentity> ().netId;
 		currentlyControlledShip = null;
-		CmdSetShipWheelOccupied (ship.GetComponent<NetworkIdentity>().netId, false);
+		CmdSetShipWheelOccupied (shipNetId, false);
+		CmdSetShipRotatingLeft (shipNetId, false);
+		CmdSetShipRotatingRight (shipNetId, false);
 		Player.localPlayer.isControllingShip = false;
 		Player.localPlayer.UnlockMovement ();
 	}
@@ -72,6 +102,29 @@ public class PlayerShipManager : NetworkBehaviour {
 	public void ParentPlayer (GameObject player, GameObject ship) {
 		CmdParentPlayer (player.GetComponent<NetworkIdentity>().netId, ship.GetComponent<NetworkIdentity>().netId);
 	}
+
+	[Command]
+	void CmdSetShipTravelling (NetworkInstanceId shipNetId, bool isTravelling)
+	{
+		Ship ship = NetworkServer.FindLocalObject (shipNetId).GetComponent<Ship>();
+		ship.isTraveling = isTravelling;
+		Debug.Log ("hey");
+	}
+
+	[Command]
+	void CmdSetShipRotatingRight (NetworkInstanceId shipNetId, bool isRotating)
+	{
+		Ship ship = NetworkServer.FindLocalObject (shipNetId).GetComponent<Ship>();
+		ship.isRotatingRight = isRotating;
+	}
+
+	[Command]
+	void CmdSetShipRotatingLeft (NetworkInstanceId shipNetId, bool isRotating)
+	{
+		Ship ship = NetworkServer.FindLocalObject (shipNetId).GetComponent<Ship>();
+		ship.isRotatingLeft = isRotating;
+	}
+
 
 	[Command]
 	void CmdSetShipWheelOccupied (NetworkInstanceId shipNetId, bool isOccupied) 

@@ -19,11 +19,13 @@ public class Player : NetworkBehaviour {
 	private UIManager uiManager;
 	private PlayerInventory inventory;
 	private PlayerAnimationController animationController;
+	private PlayerShipManager shipManager;
 
 	private int? activeHotbarSlot = null;
 	private bool isItemEquipped = false;
 	[SyncVar(hook="CheckIfDead")] private bool isDead = false;
 
+	public bool isControllingShip = false;
 	public bool IsItemEquipped {get{return isItemEquipped;}}
 	[SyncVar] public string playerID; // Super early placeholder stuff. In the future we might store the CSteamID variable instead, or something else.
 
@@ -44,6 +46,8 @@ public class Player : NetworkBehaviour {
 		inventory = GetComponent<PlayerInventory> ();
 
 		animationController = GetComponent<PlayerAnimationController> ();
+
+		shipManager = GetComponent<PlayerShipManager> ();
 
 		uiManager = GameObject.FindObjectOfType<UIManager> ();
 		if (!uiManager)
@@ -136,7 +140,7 @@ public class Player : NetworkBehaviour {
 			}
 		}
 
-		if (Input.GetMouseButtonDown(1))
+		if (Input.GetMouseButtonDown(1) && !isControllingShip)
 		{
 			if (IsItemEquipped && animationController.CurrentEquippedItemID != 0) 
 			{
@@ -148,7 +152,7 @@ public class Player : NetworkBehaviour {
 			animationController.SetAiming (false);
 		}
 
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && !isControllingShip)
 		{
 			if (IsItemEquipped && animationController.CurrentEquippedItemID != 0) 
 			{
@@ -161,8 +165,12 @@ public class Player : NetworkBehaviour {
 	{
 		if (!isLocalPlayer)
 			return;
-		
-		CastRayForItems ();
+
+		if (!isControllingShip) {
+			CastRayForItems ();
+		} else {
+			uiManager.ClearInteractText ();
+		}
 	}
 		
 
@@ -173,6 +181,7 @@ public class Player : NetworkBehaviour {
 		if (Physics.Raycast (camera.transform.position, camera.transform.forward, out hit, 2.4f, 1, QueryTriggerInteraction.Collide))
 		{
 			Item item = hit.collider.GetComponent<Item> ();
+			ShipWheel shipWheel = hit.collider.GetComponent <ShipWheel> ();
 			if (item)
 			{
 				uiManager.SetInteractTextToItem (item);
@@ -181,14 +190,22 @@ public class Player : NetworkBehaviour {
 					AttemptPickUpItem (item);
 				}
 			}
+			else if (shipWheel) 
+			{
+				uiManager.SetInteractText ("E - Take control");
+				if (Input.GetKeyDown(KeyCode.E))
+				{
+					shipManager.ActivateShipWheel (shipWheel.GetComponentInParent<Ship>());
+				}
+			}
 			else 
 			{
-				uiManager.DisableInteractText ();
+				uiManager.ClearInteractText ();
 			}
 		}
 		else
 		{
-			uiManager.DisableInteractText ();
+			uiManager.ClearInteractText ();
 		}
 	}
 
@@ -242,15 +259,6 @@ public class Player : NetworkBehaviour {
 		Debug.Log(playerID);
 	}
 		
-
-	public void Die() // Public wrapper for command
-	{
-		Debug.Log ("Die() called on " + name);
-
-		CmdDie ();
-
-	}
-		
 	void EquipItem (int itemID)
 	{
 		isItemEquipped = true;
@@ -262,6 +270,14 @@ public class Player : NetworkBehaviour {
 	{
 		isItemEquipped = false;
 		animationController.DeactivateHands();
+	}
+
+	public void Die() // Public wrapper for command
+	{
+		Debug.Log ("Die() called on " + name);
+
+		CmdDie ();
+
 	}
 
 	public void DropItem (int slotX, int slotY) {
@@ -276,6 +292,22 @@ public class Player : NetworkBehaviour {
 	{
 		if (activeHotbarSlot != null)
 			EquipItem (inventory.GetInventoryArray ()[(int)activeHotbarSlot, 0]);
+	}
+
+	public void LockMovement ()
+	{
+		if (!isLocalPlayer) {
+			return;
+		}
+		firstPersonController.LockMovement ();
+	}
+
+	public void UnlockMovement ()
+	{
+		if (!isLocalPlayer) {
+			return;
+		}
+		firstPersonController.UnlockMovement ();
 	}
 
 	public Camera GetCamera ()

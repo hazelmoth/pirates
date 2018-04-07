@@ -5,6 +5,9 @@ using UnityEngine.Networking;
 
 public class PlayerShipManager : NetworkBehaviour {
 
+	private Ship currentlyControlledShip = null;
+	private bool justActivatedWheel = false; // True for a single frame after the player takes control, to prevent deactivating during the same frame
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,11 +15,68 @@ public class PlayerShipManager : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (!isLocalPlayer || Player.localPlayer.isControllingShip == false)
+		{
+			return;
+		}
+		if (Input.GetKeyDown (KeyCode.E) && currentlyControlledShip != null && justActivatedWheel == false)
+		{
+			DeactivateShipWheel (currentlyControlledShip);
+		}
+		if (justActivatedWheel)
+		{
+			justActivatedWheel = false;
+		}
+	}
+
+	private Transform originalParent = null; // Used to revert back to old parent after being parented to a ship wheel
+
+	public void ActivateShipWheel (Ship ship) {
+		if (!isLocalPlayer) {
+			return;
+		}
+		if (ship.WheelIsOccupied) {
+			Debug.Log ("Player tried to activate occupied ship wheel");
+			return;
+		}
+		currentlyControlledShip = ship;
+		justActivatedWheel = true;
+		CmdSetShipWheelOccupied (ship.GetComponent<NetworkIdentity>().netId, true);
+		originalParent = transform.parent;
+		GameObject wheelPlayerPosition = ship.GetComponentInChildren<WheelPlayerPosition> ().gameObject;
+		Player.localPlayer.isControllingShip = true;
+		Player.localPlayer.LockMovement ();
+		transform.SetParent (wheelPlayerPosition.transform);
+		transform.localPosition = Vector3.zero;
+	}
+
+	public void DeactivateShipWheel (Ship ship) {
+		if (!isLocalPlayer) {
+			return;
+		}
+		if (!ship.WheelIsOccupied) {
+			Debug.LogWarning ("Player tried deactivate a wheel that isn't occupied?");
+			return;
+		}
+		if (!originalParent) {
+			transform.parent = null;
+		} else {
+			transform.SetParent (originalParent);
+		}
+		currentlyControlledShip = null;
+		CmdSetShipWheelOccupied (ship.GetComponent<NetworkIdentity>().netId, false);
+		Player.localPlayer.isControllingShip = false;
+		Player.localPlayer.UnlockMovement ();
 	}
 
 	public void ParentPlayer (GameObject player, GameObject ship) {
 		CmdParentPlayer (player.GetComponent<NetworkIdentity>().netId, ship.GetComponent<NetworkIdentity>().netId);
+	}
+
+	[Command]
+	void CmdSetShipWheelOccupied (NetworkInstanceId shipNetId, bool isOccupied) 
+	{
+		NetworkServer.FindLocalObject(shipNetId).GetComponent<Ship>().SetWheelOccupied (isOccupied);
 	}
 
 	[Command]
@@ -29,12 +89,12 @@ public class PlayerShipManager : NetworkBehaviour {
 	void RpcParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
 		GameObject player = ClientScene.FindLocalObject (playerNetId);
 		GameObject ship = ClientScene.FindLocalObject (shipId);
-		if (player == Player.localPlayer.gameObject) { 						// Only set the parent if you are the player being parented, so the other clients follow the movement of the player and ship seperately to keep it smooth.
-			player.transform.SetParent (ship.transform);            // (This sort of defeats the purpose of doing a command and ClientRpc. Oh well.)
+		if (player == Player.localPlayer.gameObject) { 		// Only set the parent if you are the player being parented, so the other clients follow the movement of the player and ship seperately to keep it smooth.
+			player.transform.SetParent (ship.transform);	// (This sort of defeats the purpose of doing a command and ClientRpc. Oh well.)
 		}
 	}
 
-	public void UnarentPlayer (GameObject player) {
+	public void UnparentPlayer (GameObject player) {
 		CmdUnparentPlayer (player.GetComponent<NetworkIdentity>().netId);
 	}
 

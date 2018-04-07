@@ -43,6 +43,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 		private Animator m_Animator;
+		private bool m_movementIsLocked = false; // Custom
 
         // Use this for initialization
         private void Start()
@@ -66,7 +67,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		{
 			RotateView ();
 			// the jump state needs to read here to make sure it is not missed
-			if (!m_Jump) {
+			if (!m_Jump && !m_movementIsLocked) {
 				m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
 			}
 
@@ -169,7 +170,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void PlayFootStepAudio()
         {
-            if (!m_CharacterController.isGrounded)
+			if (!m_CharacterController.isGrounded || m_movementIsLocked)
             {
                 return;
             }
@@ -210,6 +211,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void GetInput(out float speed)
         {
+			if (m_movementIsLocked) {
+				speed = 0;
+				return;
+			}
+			
             // Read input
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
@@ -259,11 +265,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
 
-            if (body == null || body.isKinematic)
+			if (body == null || body.isKinematic || body.GetComponentInParent<Ship>() != null)
             {
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+
+		public void LockMovement() {
+			m_movementIsLocked = true;
+		}
+
+		public void UnlockMovement() {
+			m_movementIsLocked = false;
+		}
     }
 }

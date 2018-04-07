@@ -24,7 +24,7 @@ public class ShipParentCollider : MonoBehaviour {
 
 	void OnTriggerExit (Collider collider) {
 		if (collider.GetComponent<Player>() != null) {
-			ship.UnarentPlayer (collider.gameObject);
+			ship.UnparentPlayer (collider.gameObject);
 		}
 	}
 }

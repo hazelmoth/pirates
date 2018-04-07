@@ -282,10 +282,15 @@ public class UIManager : MonoBehaviour {
 
 	public void SetInteractTextToItem (Item item)
 	{
-		interactText.text = "Press 'E' to pick up " + item.ItemName;
+		interactText.text = "E - Pick up " + item.ItemName;
 	}
 
-	public void DisableInteractText ()
+	public void SetInteractText (string text)
+	{
+		interactText.text = text;
+	}
+
+	public void ClearInteractText ()
 	{
 		interactText.text = "";
 	}

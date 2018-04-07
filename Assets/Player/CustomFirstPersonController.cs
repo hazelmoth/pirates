@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
         [SerializeField] private float m_GravityMultiplier;
-        [SerializeField] private MouseLook m_MouseLook;
+        [SerializeField] private CustomMouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
@@ -278,6 +278,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 		public void UnlockMovement() {
 			m_movementIsLocked = false;
+		}
+
+		public void RecordGlobalRotation() 
+		{
+			m_MouseLook.RecordGlobalRotation (transform , m_Camera.transform);
+		}
+
+		public void RestoreGlobalRotation() 
+		{
+			m_MouseLook.RestoreGlobalRotation(transform , m_Camera.transform);
 		}
     }
 }

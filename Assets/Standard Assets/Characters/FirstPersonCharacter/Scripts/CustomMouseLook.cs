@@ -5,7 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 namespace UnityStandardAssets.Characters.FirstPerson
 {
     [Serializable]
-    public class MouseLook
+    public class CustomMouseLook
     {
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
@@ -15,10 +15,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;
+		public bool useGlobalRotation = false;
 
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
+		private Quaternion m_RecordedGlobalCharacterRotation;
+		private Quaternion m_RecordedGlobalCameraRotation;
         private bool m_cursorIsLocked = true;
 
         public void Init(Transform character, Transform camera)
@@ -49,12 +52,30 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
             {
                 character.localRotation = m_CharacterTargetRot;
-				character.rotation = m_CharacterTargetRot; // I added this line to prevent the player from turning when he's parented to a ship
+
+				if (useGlobalRotation) {
+					character.rotation = m_CharacterTargetRot; // prevent the player from turning when he's parented to a ship
+				}
+
                 camera.localRotation = m_CameraTargetRot;
             }
 
             UpdateCursorLock();
         }
+
+		public void RecordGlobalRotation(Transform character, Transform camera) 
+		{
+			m_RecordedGlobalCharacterRotation = character.rotation;
+			m_RecordedGlobalCameraRotation = camera.rotation;
+		}
+
+		public void RestoreGlobalRotation(Transform character, Transform camera) 
+		{
+			character.rotation = m_RecordedGlobalCharacterRotation;
+			camera.rotation = m_RecordedGlobalCameraRotation;
+			m_CharacterTargetRot = character.localRotation;
+			m_CameraTargetRot = camera.localRotation;
+		}
 
         public void SetCursorLock(bool value)
         {

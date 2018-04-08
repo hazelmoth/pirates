@@ -2142,7 +2142,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!81 &81190403574407882
@@ -2316,6 +2316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cdc7e28af9a9446b4457bf9d59eabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isControllingShip: 0
   playerID: 
   activateDeath: 0
 --- !u!114 &114298106196871600
@@ -2393,7 +2394,7 @@ MonoBehaviour:
   m_RunSpeed: 6
   m_RunstepLenghten: 0.7
   m_JumpSpeed: 5.69
-  m_StickToGroundForce: 10
+  m_StickToGroundForce: 1
   m_GravityMultiplier: 2
   m_MouseLook:
     XSensitivity: 2
@@ -2402,8 +2403,9 @@ MonoBehaviour:
     MinimumX: -90
     MaximumX: 90
     smooth: 0
-    smoothTime: 5
+    smoothTime: 1
     lockCursor: 0
+    useGlobalRotation: 0
   m_UseFovKick: 1
   m_FovKick:
     Camera: {fileID: 0}
@@ -2798,6 +2800,6 @@ CharacterController:
   m_Radius: 0.275
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.15
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.78, z: 0}

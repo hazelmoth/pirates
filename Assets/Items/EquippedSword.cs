@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class EquippedSword : MonoBehaviour {
+public class EquippedSword : NetworkBehaviour {
 
 	private bool isCheckingForCollision = false;
 
@@ -18,7 +19,7 @@ public class EquippedSword : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider collider) {
-		if (isCheckingForCollision && collider.GetComponent<Player>() != null) {
+		if (isCheckingForCollision && collider.GetComponent<Player>() != null && isServer) {
 			isCheckingForCollision = false;
 			Debug.Log ("A sword hit a player!");
 		}

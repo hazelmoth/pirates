@@ -514,8 +514,6 @@ GameObject:
   - component: {fileID: 4232746684320494}
   - component: {fileID: 33998503776450646}
   - component: {fileID: 23449121456788490}
-  - component: {fileID: 64870815307969268}
-  - component: {fileID: 114781851369777246}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -1695,20 +1693,6 @@ MeshCollider:
   m_InflateMesh: 1
   m_SkinWidth: 0.17
   m_Mesh: {fileID: 4300018, guid: 30c441eb196c4ea4bb6eef4057624e3c, type: 3}
---- !u!64 &64870815307969268
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1662021904609520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 1
-  m_InflateMesh: 1
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: 30c441eb196c4ea4bb6eef4057624e3c, type: 3}
 --- !u!64 &64890080992093610
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -2136,17 +2120,6 @@ MonoBehaviour:
     i15: 244
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114781851369777246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1662021904609520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d03622b3cb50e4c857e295d5f6d260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114855568152580362
 MonoBehaviour:
   m_ObjectHideFlags: 1

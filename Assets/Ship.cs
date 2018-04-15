@@ -25,6 +25,8 @@ public class Ship : NetworkBehaviour {
 	void FixedUpdate () {
 		if (isTraveling) {
 			transform.Translate (Vector3.forward * speed * Time.deltaTime, transform);
+			//rigidbody.AddForce(transform.forward * speed);
+			//rigidbody.MovePosition(transform.position + transform.forward * speed);
 		}
 		if (isRotatingLeft) {
 			transform.Rotate (new Vector3 (0f, -rotationalSpeed, 0f));

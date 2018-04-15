@@ -86,11 +86,8 @@ public class PlayerShipManager : NetworkBehaviour {
 			Debug.LogWarning ("Player tried to deactivate a wheel that isn't occupied?");
 			return;
 		}
-		if (!originalParent) {
-			transform.parent = null;
-		} else {
-			transform.SetParent (originalParent);
-		}
+		transform.SetParent (ship.transform);
+
 		NetworkInstanceId shipNetId = ship.GetComponent<NetworkIdentity> ().netId;
 		currentlyControlledShip = null;
 		CmdSetShipWheelOccupied (shipNetId, false);
@@ -101,18 +98,17 @@ public class PlayerShipManager : NetworkBehaviour {
 	}
 
 	public void ParentPlayer (GameObject player, GameObject ship) {
-		if (player == Player.localPlayer.gameObject) { 		// Only set the parent if you are the player being parented
-			GetComponent<CustomFirstPersonController>().RecordGlobalRotation();
-			player.transform.SetParent (ship.transform);
-			GetComponent<CustomFirstPersonController>().RestoreGlobalRotation();
+		if (player == Player.localPlayer.gameObject) {
+			NetworkInstanceId playerId = player.GetComponent<NetworkIdentity> ().netId;
+			NetworkInstanceId shipId = ship.GetComponent<NetworkIdentity> ().netId;
+			CmdParentPlayer (playerId, shipId);
 		}
 	}
 
 	public void UnparentPlayer (GameObject player) {
 		if (player == Player.localPlayer.gameObject) {
-			GetComponent<CustomFirstPersonController>().RecordGlobalRotation();
-			player.transform.parent = null;
-			GetComponent<CustomFirstPersonController>().RestoreGlobalRotation();
+			NetworkInstanceId playerId = player.GetComponent<NetworkIdentity> ().netId;
+			CmdUnparentPlayer (playerId);
 		}
 	}
 
@@ -145,33 +141,51 @@ public class PlayerShipManager : NetworkBehaviour {
 		NetworkServer.FindLocalObject(shipNetId).GetComponent<Ship>().SetWheelOccupied (isOccupied);
 	}
 
-//	[Command]
-//	void CmdParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
-//		Debug.Log("[SERVER] Command to parent player to a boat has been called");
-//		RpcParentPlayer (playerNetId, shipId);
-//	}
-//
-//	[ClientRpc]
-//	void RpcParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
-//		GameObject player = ClientScene.FindLocalObject (playerNetId);
-//		GameObject ship = ClientScene.FindLocalObject (shipId);
-//		if (player == Player.localPlayer.gameObject) { 		// Only set the parent if you are the player being parented, so the other clients follow the movement of the player and ship seperately to keep it smooth.
-//			player.transform.SetParent (ship.transform);	// (This sort of defeats the purpose of doing a command and ClientRpc. Oh well.)
-//		}
-//	}
-//
-//
-//
-//	[Command]
-//	void CmdUnparentPlayer (NetworkInstanceId playerNetId) {
-//		RpcUnparentPlayer (playerNetId);
-//	}
-//
-//	[ClientRpc]
-//	void RpcUnparentPlayer (NetworkInstanceId playerNetId) {
-//		GameObject player = ClientScene.FindLocalObject (playerNetId);
-//		if (player == Player.localPlayer.gameObject) {
-//			player.transform.parent = null;
-//		}
-//	}
+	[Command]
+	void CmdParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
+		Debug.Log("[SERVER] Command to parent player to a boat has been called");
+		RpcParentPlayer (playerNetId, shipId);
+	}
+
+	[ClientRpc]
+	void RpcParentPlayer (NetworkInstanceId playerNetId, NetworkInstanceId shipId) {
+		GameObject player = ClientScene.FindLocalObject (playerNetId);
+		GameObject ship = ClientScene.FindLocalObject (shipId);
+
+		if (Player.localPlayer.gameObject == player) {
+			GetComponent<CustomFirstPersonController> ().RecordGlobalRotation ();
+		}
+
+		if (Player.localPlayer.gameObject == player) {
+			player.transform.SetParent (ship.transform); // Only parent on local player
+		}
+
+		player.GetComponent<NetworkTransform> ().sendInterval = 0.06f; // Lower send rate while on a ship to eliminate jitter
+		if (Player.localPlayer.gameObject == player) {
+			GetComponent<CustomFirstPersonController> ().RestoreGlobalRotation ();
+		}
+	}
+		
+
+	[Command]
+	void CmdUnparentPlayer (NetworkInstanceId playerNetId) {
+		RpcUnparentPlayer (playerNetId);
+	}
+
+	[ClientRpc]
+	void RpcUnparentPlayer (NetworkInstanceId playerNetId) {
+		GameObject player = ClientScene.FindLocalObject (playerNetId);
+		if (Player.localPlayer.gameObject == player) {
+			GetComponent<CustomFirstPersonController> ().RecordGlobalRotation ();
+		}
+
+		if (Player.localPlayer.gameObject == player) {
+			player.transform.parent = null;
+		}
+
+		player.GetComponent<NetworkTransform> ().sendInterval = 0.1f; // Reset send rate when back on land
+		if (Player.localPlayer.gameObject == player) {
+			GetComponent<CustomFirstPersonController> ().RestoreGlobalRotation ();
+		}
+	}
 }

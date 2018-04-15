@@ -17,13 +17,13 @@ public class ShipParentCollider : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		if (collider.GetComponent<Player>() != null) {
+		if (collider.GetComponent<Player>() != null && collider.GetComponent<Player>() == Player.localPlayer) {
 			ship.ParentPlayer (collider.gameObject);
 		}
 	}
 
 	void OnTriggerExit (Collider collider) {
-		if (collider.GetComponent<Player>() != null) {
+		if (collider.GetComponent<Player>() != null && collider.GetComponent<Player>() == Player.localPlayer) {
 			ship.UnparentPlayer (collider.gameObject);
 		}
 	}

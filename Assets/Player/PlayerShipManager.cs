@@ -56,8 +56,7 @@ public class PlayerShipManager : NetworkBehaviour {
 			justActivatedWheel = false;
 		}
 	}
-
-	private Transform originalParent = null; // Used to revert back to old parent after being parented to a ship wheel
+		
 
 	public void ActivateShipWheel (Ship ship) {
 		if (!isLocalPlayer) {
@@ -70,12 +69,11 @@ public class PlayerShipManager : NetworkBehaviour {
 		currentlyControlledShip = ship;
 		justActivatedWheel = true;
 		CmdSetShipWheelOccupied (ship.GetComponent<NetworkIdentity>().netId, true);
-		originalParent = transform.parent;
 		GameObject wheelPlayerPosition = ship.GetComponentInChildren<WheelPlayerPosition> ().gameObject;
 		Player.localPlayer.isControllingShip = true;
 		Player.localPlayer.LockMovement ();
-		transform.SetParent (wheelPlayerPosition.transform);
-		transform.localPosition = Vector3.zero;
+		transform.position = wheelPlayerPosition.transform.position;
+		transform.rotation = wheelPlayerPosition.transform.rotation;
 	}
 
 	public void DeactivateShipWheel (Ship ship) {
@@ -86,8 +84,6 @@ public class PlayerShipManager : NetworkBehaviour {
 			Debug.LogWarning ("Player tried to deactivate a wheel that isn't occupied?");
 			return;
 		}
-		transform.SetParent (ship.transform);
-
 		NetworkInstanceId shipNetId = ship.GetComponent<NetworkIdentity> ().netId;
 		currentlyControlledShip = null;
 		CmdSetShipWheelOccupied (shipNetId, false);

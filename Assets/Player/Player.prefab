@@ -945,8 +945,8 @@ GameObject:
   - component: {fileID: 143023619960460086}
   - component: {fileID: 82965615694608860}
   - component: {fileID: 114901382312480720}
-  - component: {fileID: 114776559031756632}
   - component: {fileID: 114595702942803786}
+  - component: {fileID: 114610746141002166}
   - component: {fileID: 114666055184769930}
   - component: {fileID: 114254491831340520}
   - component: {fileID: 114298106196871600}
@@ -2350,6 +2350,21 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &114610746141002166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829146851704994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482bdfed6c402554796a00e16aec9b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpRate: 10
+  posThreshold: 0.1
+  rotThreshold: 2
+  useLocalTransform: 1
 --- !u!114 &114652631079915890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2477,27 +2492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 100
---- !u!114 &114776559031756632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1829146851704994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 4
-  m_SendInterval: 0.09090909
-  m_SyncRotationAxis: 4
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114825575526957082
 MonoBehaviour:
   m_ObjectHideFlags: 1

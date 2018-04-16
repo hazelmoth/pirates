@@ -156,11 +156,11 @@ public class PlayerShipManager : NetworkBehaviour {
 			GetComponent<CustomFirstPersonController> ().RecordGlobalRotation ();
 		}
 
-		if (Player.localPlayer.gameObject == player) {
-			player.transform.SetParent (ship.transform); // Only parent on local player
-		}
 
-		player.GetComponent<NetworkTransform> ().sendInterval = 0.06f; // Lower send rate while on a ship to eliminate jitter
+		player.transform.SetParent (ship.transform); 
+
+
+		//player.GetComponent<NetworkTransform> ().sendInterval = 0.06f; // Lower send rate while on a ship to eliminate jitter
 		if (Player.localPlayer.gameObject == player) {
 			GetComponent<CustomFirstPersonController> ().RestoreGlobalRotation ();
 		}
@@ -179,11 +179,11 @@ public class PlayerShipManager : NetworkBehaviour {
 			GetComponent<CustomFirstPersonController> ().RecordGlobalRotation ();
 		}
 
-		if (Player.localPlayer.gameObject == player) {
-			player.transform.parent = null;
-		}
 
-		player.GetComponent<NetworkTransform> ().sendInterval = 0.1f; // Reset send rate when back on land
+		player.transform.parent = null;
+
+
+		//player.GetComponent<NetworkTransform> ().sendInterval = 0.1f; // Reset send rate when back on land
 		if (Player.localPlayer.gameObject == player) {
 			GetComponent<CustomFirstPersonController> ().RestoreGlobalRotation ();
 		}

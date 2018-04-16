@@ -20,6 +20,8 @@ public class CustomNetworkTransform : NetworkBehaviour
 	private float posThreshold = 0.5f;
 	[SerializeField]
 	private float rotThreshold = 5;
+	[SerializeField]
+	private bool useLocalTransform = false;
 
 	// Use this for initialization
 	void Start()
@@ -44,7 +46,17 @@ public class CustomNetworkTransform : NetworkBehaviour
 	[ClientCallback]
 	void TransmitMotion()
 	{
-		if(hasAuthority)
+		if(hasAuthority && useLocalTransform)
+		{
+			if (Vector3.Distance(myTransform.localPosition, lastPos) > posThreshold || Quaternion.Angle(myTransform.localRotation, lastRot) > rotThreshold)
+			{
+				Cmd_ProvidePositionToServer(myTransform.localPosition, myTransform.localEulerAngles.y);
+
+				lastPos = myTransform.localPosition;
+				lastRot = myTransform.localRotation;
+			}
+		}
+		else if(hasAuthority)
 		{
 			if (Vector3.Distance(myTransform.position, lastPos) > posThreshold || Quaternion.Angle(myTransform.rotation, lastRot) > rotThreshold)
 			{
@@ -58,7 +70,14 @@ public class CustomNetworkTransform : NetworkBehaviour
 
 	void LerpMotion()
 	{
-		if (!hasAuthority)
+		if (!hasAuthority && useLocalTransform)
+		{
+			myTransform.localPosition = Vector3.Lerp(myTransform.transform.localPosition, syncPos, Time.deltaTime * lerpRate);
+
+			Vector3 newRot = new Vector3(0, syncYRot, 0);
+			myTransform.localRotation = Quaternion.Lerp(myTransform.localRotation, Quaternion.Euler(newRot), Time.deltaTime * lerpRate);
+		}
+		else if (!hasAuthority)
 		{
 			myTransform.position = Vector3.Lerp(myTransform.transform.position, syncPos, Time.deltaTime * lerpRate);
 

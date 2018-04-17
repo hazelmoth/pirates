@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114883333352868000}
   - component: {fileID: 54346786543766370}
   - component: {fileID: 114803408308596542}
+  - component: {fileID: 114485347533138540}
   m_Layer: 0
   m_Name: TestBoat
   m_TagString: Untagged
@@ -137,7 +138,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1059054603589624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2423158, y: 0.22, z: 0.22052288}
+  m_LocalPosition: {x: -7.54, y: 0.016, z: 0.22052288}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4282469806065474}
@@ -383,6 +384,19 @@ MonoBehaviour:
     i15: 129
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114485347533138540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059054603589624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507dbfe8fdd556b48b1eaa607d3b9f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobStrength: 0.08
+  bobSpeed: 0.5
 --- !u!114 &114552162694847924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,3 +449,4 @@ MonoBehaviour:
   lerpRate: 10
   posThreshold: 0.1
   rotThreshold: 2
+  useLocalTransform: 0

@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 114583928713951920}
   - component: {fileID: 54877390536416534}
   - component: {fileID: 114303437633913388}
+  - component: {fileID: 114909079573988436}
   - component: {fileID: 114429061098936110}
   m_Layer: 0
   m_Name: Cog
@@ -2088,6 +2089,7 @@ MonoBehaviour:
   lerpRate: 10
   posThreshold: 0.1
   rotThreshold: 2
+  useLocalTransform: 0
 --- !u!114 &114583928713951920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2142,6 +2144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d03622b3cb50e4c857e295d5f6d260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114909079573988436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394391502918294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507dbfe8fdd556b48b1eaa607d3b9f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobStrength: 0.2
+  bobSpeed: 0.2
 --- !u!114 &114938802014724852
 MonoBehaviour:
   m_ObjectHideFlags: 1

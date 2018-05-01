@@ -12,7 +12,7 @@ public class PlayerHealth : NetworkBehaviour {
 
 	public override void OnStartLocalPlayer ()
 	{
-		
+		GameObject.FindObjectOfType<UIManager> ().UpdateHealthBar (currentHealth / maxHealth);
 	}
 
 	public void TakeDamage(int amount)
@@ -31,6 +31,8 @@ public class PlayerHealth : NetworkBehaviour {
 	void OnChangeHealth (int health)
 	{
 		currentHealth = health;
-		Player.localPlayer.GetComponent<UIManager>().UpdateHealthBar(currentHealth / maxHealth);
+		if (Player.localPlayer.gameObject == this.gameObject) {
+			GameObject.FindObjectOfType<UIManager> ().UpdateHealthBar ((float)currentHealth / (float)maxHealth);
+		}
 	}
 }

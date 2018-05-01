@@ -118,7 +118,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1747229967690560}
   m_LocalRotation: {x: 0, y: 0.66131186, z: 0, w: 0.75011104}
-  m_LocalPosition: {x: 3.2534637, y: 0.08797001, z: 2.1677551}
+  m_LocalPosition: {x: 2.9497218, y: 0.08797001, z: 2.0800111}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4343977893081288}
@@ -383,6 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5e4831bfac304489218f549fa03f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordPrefab: {fileID: 1636342466230454, guid: 45bd5eccf904cff4ea269532fac7cdc3,
+    type: 2}
 --- !u!136 &136353446497674364
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -393,6 +395,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.05
-  m_Height: 0.63
+  m_Height: 0.45
   m_Direction: 1
-  m_Center: {x: 0, y: 0.36, z: 0}
+  m_Center: {x: 0, y: 0.29, z: 0}

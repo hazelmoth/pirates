@@ -6,10 +6,12 @@ using UnityEngine.Networking;
 public class EquippedSword : NetworkBehaviour {
 
 	private bool isCheckingForCollision = false;
+	[SerializeField] private GameObject swordPrefab;
+	private Sword sword;
 
 	// Use this for initialization
 	void Start () {
-		
+		sword = swordPrefab.GetComponent<Sword> ();
 	}
 
 	public void ActivateCollisionCheck() {
@@ -22,6 +24,7 @@ public class EquippedSword : NetworkBehaviour {
 		if (isCheckingForCollision && collider.GetComponent<Player>() != null && isServer) {
 			isCheckingForCollision = false;
 			Debug.Log ("A sword hit a player!");
+			collider.GetComponent<PlayerHealth> ().TakeDamage (sword.BaseDamage());
 		}
 	}
 

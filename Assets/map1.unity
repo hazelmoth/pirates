@@ -12010,7 +12010,11 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 6c8af53d299d21d488de0a1e5d60ac79, type: 2}
     - target: {fileID: 100000, guid: fe9c39e8d106f1e44a734f2da24aaf8c, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fe9c39e8d106f1e44a734f2da24aaf8c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fe9c39e8d106f1e44a734f2da24aaf8c, type: 3}

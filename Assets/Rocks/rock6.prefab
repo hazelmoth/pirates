@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33069806174672280}
   - component: {fileID: 23987294246257958}
   - component: {fileID: 95893820321013634}
+  - component: {fileID: 64621938683976412}
   m_Layer: 0
   m_Name: rock6
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1694678125175624}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 53.80734, y: 2.16, z: 93.35195}
+  m_LocalPosition: {x: 76.80358, y: 9.629429e-19, z: -17.346836}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,6 +81,20 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1694678125175624}
+  m_Mesh: {fileID: 4300000, guid: 6c09c34de5c3fb2488044743b4a7114d, type: 3}
+--- !u!64 &64621938683976412
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1694678125175624}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 1
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 6c09c34de5c3fb2488044743b4a7114d, type: 3}
 --- !u!95 &95893820321013634
 Animator:

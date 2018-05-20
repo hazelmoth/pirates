@@ -28,6 +28,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1258909913476172
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4149391127198340}
+  - component: {fileID: 136775203263350508}
+  m_Layer: 0
+  m_Name: collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1700421749075656
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +90,19 @@ Transform:
   m_Father: {fileID: 4425706660403568}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4149391127198340
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258909913476172}
+  m_LocalRotation: {x: -0.06279047, y: 0, z: 0, w: 0.9980267}
+  m_LocalPosition: {x: 0, y: 1.03, z: 7.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4846869007298646}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -7.2, y: 0, z: 0}
 --- !u!4 &4425706660403568
 Transform:
   m_ObjectHideFlags: 1
@@ -81,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1700421749075656}
   m_LocalRotation: {x: -0, y: 0.11228559, z: -0, w: 0.993676}
-  m_LocalPosition: {x: 75.26, y: 6.08, z: 133.19}
+  m_LocalPosition: {x: 38.04228, y: -2.958924e-19, z: 5.3303237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4846869007298646}
@@ -98,7 +127,8 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.34721148, y: 0.34721148, z: 0.34721148}
-  m_Children: []
+  m_Children:
+  - {fileID: 4149391127198340}
   m_Father: {fileID: 4425706660403568}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -197,3 +227,16 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!136 &136775203263350508
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258909913476172}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 17.24
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}

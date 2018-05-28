@@ -22,11 +22,13 @@ public class ServerManager : NetworkBehaviour {
 	void Update () {
 		
 	}
-		
 
 	public void UpdatePlayerList() {
 		foreach(PlayerController controller in networkManager.client.connection.playerControllers) {
-			// Debug.Log (controller.gameObject);
+			players.Clear ();
+			if (controller.IsValid) {
+				players.Add (controller.gameObject.GetComponent<Player>());
+			}
 		}
 	}
 

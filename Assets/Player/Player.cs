@@ -96,6 +96,8 @@ public class Player : NetworkBehaviour {
 
 		DebugID ();
 
+		CmdUpdateServerManagerPlayerList ();
+
 	}
 
 	void Update()
@@ -321,6 +323,10 @@ public class Player : NetworkBehaviour {
 
 
 
+	[Command]
+	void CmdUpdateServerManagerPlayerList() {
+		ServerManager.instance.UpdatePlayerList ();
+	}
 
 	[Command]
 	void CmdSetPlayerID(string id)

@@ -182,6 +182,7 @@ public class Player : NetworkBehaviour {
 		{
 			Item item = hit.collider.GetComponent<Item> ();
 			ShipWheel shipWheel = hit.collider.GetComponent <ShipWheel> ();
+			Harbourmaster harbourmaster = hit.collider.GetComponent<Harbourmaster> ();
 			if (item)
 			{
 				uiManager.SetInteractTextToItem (item);
@@ -197,6 +198,9 @@ public class Player : NetworkBehaviour {
 				{
 					shipManager.ActivateShipWheel (shipWheel.GetComponentInParent<Ship>());
 				}
+			}
+			else if (harbourmaster) {
+				uiManager.SetInteractText ("E - Access port");
 			}
 			else 
 			{

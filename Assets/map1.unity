@@ -3800,6 +3800,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 535239057}
+  - component: {fileID: 535239059}
+  - component: {fileID: 535239058}
   m_Layer: 0
   m_Name: Harbourmaster
   m_TagString: Untagged
@@ -3824,6 +3826,29 @@ Transform:
   m_Father: {fileID: 1917079607}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -102.23501, z: 0}
+--- !u!65 &535239058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 535239056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.354543, y: 2.7012112, z: 1}
+  m_Center: {x: 0.11598708, y: 0.8506051, z: -0.0008826085}
+--- !u!114 &535239059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 535239056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7342ddcd3a4865049b6c8bf020f03435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &556346445
 Prefab:
   m_ObjectHideFlags: 0

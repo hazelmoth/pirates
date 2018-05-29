@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64917851319913052}
   m_Layer: 0
   m_Name: Port Border
-  m_TagString: Untagged
+  m_TagString: Port Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,9 +35,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1485607904989698}
-  m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: 110, y: 0.5000074, z: 62.4}
-  m_LocalScale: {x: 54.94951, y: 63.64705, z: 14.196127}
+  m_LocalRotation: {x: -0.670186, y: -0.22550113, z: -0.22550113, w: 0.670186}
+  m_LocalPosition: {x: 0.5423475, y: -6.4738193, z: -4.416711}
+  m_LocalScale: {x: 5.58163, y: 6.799879, z: 28.991648}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

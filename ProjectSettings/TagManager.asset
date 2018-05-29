@@ -9,6 +9,7 @@ TagManager:
   - Right Hand Third Person
   - Right Hand First Person
   - ShipParentCollider
+  - Port Border
   layers:
   - Default
   - TransparentFX

@@ -53,7 +53,6 @@ public class Player : NetworkBehaviour {
 		if (!uiManager)
 			Debug.LogException (new System.Exception("No UIManager object found in scene"));
 
-
 		playerMesh = transform.Find ("Player Model/Mesh").gameObject;  // Set mesh to "Local Player Mesh" layer, which is culled by player's camera
 		playerMesh.layer = 8;                                          // ...so the player doesn't see his own body
 
@@ -169,14 +168,14 @@ public class Player : NetworkBehaviour {
 			return;
 
 		if (!isControllingShip) {
-			CastRayForItems ();
+			CastRay ();
 		} else {
 			uiManager.ClearInteractText ();
 		}
 	}
 		
 
-	void CastRayForItems ()
+	void CastRay ()
 	{
 		RaycastHit hit;
 
@@ -203,6 +202,10 @@ public class Player : NetworkBehaviour {
 			}
 			else if (harbourmaster) {
 				uiManager.SetInteractText ("E - Access port");
+				if (Input.GetKeyDown(KeyCode.E))
+				{
+					uiManager.EnablePortMenu (harbourmaster.GetPort());
+				}
 			}
 			else 
 			{

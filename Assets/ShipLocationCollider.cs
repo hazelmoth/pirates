@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShipLocationCollider : NetworkBehaviour {
+public class ShipLocationCollider : NetworkBehaviour { // TODO: Make this just relay a message to the ship (so it's not a NetworkBehavious)
 
 	Ship ship;
 

@@ -24,4 +24,11 @@ public class Port : NetworkBehaviour {
 		}
 		ships.Add (ship);
 	}
+
+	public List<Ship> getDockedShipList() {
+		if (!isServer) {
+			Debug.LogError ("A client is trying to retrieve a port's ship list");
+		}
+		return ships;
+	}
 }

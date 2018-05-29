@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour {
 	[SerializeField] private GameObject inventoryPanel = null;
 	[SerializeField] private GameObject[] inventoryRows = null;
 
-
 	private GameObject currentSelectedIcon;
 	private RectTransform currentIconTransform;
 	private GameObject[,] inventoryPanelArray = new GameObject[6,9];
@@ -26,9 +25,15 @@ public class UIManager : MonoBehaviour {
 	private bool isInventoryOpen = false;
 	private int? activeHotbarSlot = null;
 
+	private PortUIManager portUIManager;
+
 
 	void Start ()
 	{
+		// portUIManager = FindObjectOfType<PortUIManager> ();
+		portUIManager = PortUIManager.instance;
+		Debug.Log (portUIManager.name);
+
 		EventSystem.current.pixelDragThreshold = 0;
 		inventoryPanel.SetActive (false);
 
@@ -311,6 +316,19 @@ public class UIManager : MonoBehaviour {
 
 	public GameObject InventoryPanel () {
 		return inventoryPanel;
+	}
+
+
+	public void EnablePortMenu (Port port) {
+		portUIManager.EnablePortMenu (port);
+		DisableCursorLock ();
+		Player.localPlayer.LockMovement ();
+	}
+
+	public void DisablePortMenu() {
+		portUIManager.DisablePortMenu ();
+		EnableCursorLock ();
+		Player.localPlayer.UnlockMovement ();
 	}
 
 	public void DebugUI()

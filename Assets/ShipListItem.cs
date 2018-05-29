@@ -1,22 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Harbourmaster : MonoBehaviour {
+public class ShipListItem : MonoBehaviour {
 
-	[SerializeField] private Port port;
+	public Text name, type, crew;
+
 
 	// Use this for initialization
 	void Start () {
-
+		//name = GameObject.f
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	public Port GetPort() {
-		return port;
 	}
 }

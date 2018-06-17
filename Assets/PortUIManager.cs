@@ -40,6 +40,11 @@ public class PortUIManager : NetworkBehaviour {
 
 	[TargetRpc]
 	void TargetUpdateDockedShipList (NetworkConnection target, SerializablePortShipList shipList) {
+		// Delete all items currently in the ship list
+		foreach (ShipListItem menuItem in contentPanel.GetComponentsInChildren<ShipListItem>()) {
+			Destroy (menuItem.gameObject);
+		}
+		// Make ShipListItem prefabs from the serializable list and put them in the ship menu
 		for (int i = 0; i < shipList.shipNames.Length; i++) {
 			GameObject newListItem = Instantiate (listItemPrefab) as GameObject;
 			ShipListItem item = newListItem.GetComponent<ShipListItem> ();

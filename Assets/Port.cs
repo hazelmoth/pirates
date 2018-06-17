@@ -25,6 +25,14 @@ public class Port : NetworkBehaviour {
 		ships.Add (ship);
 	}
 
+	public void removeShip (Ship ship) {
+		if (!isServer) {
+			Debug.LogError ("Someone who isn't the server tried to interact with a port");
+			return;
+		}
+		ships.Remove (ship);
+	}
+
 	public List<Ship> getDockedShipList() {
 		if (!isServer) {
 			Debug.LogError ("A client is trying to retrieve a port's ship list");

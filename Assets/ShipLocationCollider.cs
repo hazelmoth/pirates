@@ -32,4 +32,13 @@ public class ShipLocationCollider : NetworkBehaviour { // TODO: Make this just r
 			port.addShip (ship);
 		}
 	}
+
+	void OnTriggerExit (Collider collider) {
+		if (collider.tag == "Port Border") {
+			if (!isServer)
+				return;
+			Port port = collider.GetComponentInParent<Port> ();
+			port.removeShip (ship);
+		}
+	}
 }

@@ -9,6 +9,7 @@ public class Ship : NetworkBehaviour {
 	[SerializeField] private float rotationalSpeed;
 	private Rigidbody rigidbody;
 	private GameObject parentCollider;
+	private CollisionRaycastPoint[] points;
 	[SyncVar] private bool wheelIsOccupied = false;
 
 	public bool WheelIsOccupied {get {return wheelIsOccupied;}}
@@ -16,14 +17,17 @@ public class Ship : NetworkBehaviour {
 	[SyncVar] public bool isRotatingRight = false;
 	[SyncVar] public bool isRotatingLeft = false;
 
+
+
 	void Start ()
 	{
 		rigidbody = GetComponent<Rigidbody> ();
+		points = this.GetComponentsInChildren<CollisionRaycastPoint> ();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isTraveling) {
+		if (isTraveling && !CheckForCollision()) {
 			transform.Translate (Vector3.forward * speed * Time.deltaTime, transform);
 			//rigidbody.AddForce(transform.forward * speed);
 			//rigidbody.MovePosition(transform.position + transform.forward * speed);
@@ -34,6 +38,15 @@ public class Ship : NetworkBehaviour {
 		else if (isRotatingRight) {
 			transform.Rotate (new Vector3 (0f, rotationalSpeed, 0f));
 		}
+	}
+
+	bool CheckForCollision () {
+		foreach (CollisionRaycastPoint point in points) {
+			if (point.CheckForObstacles()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void ParentPlayer (GameObject player) {
